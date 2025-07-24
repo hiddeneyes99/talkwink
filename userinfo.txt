@@ -1,0 +1,2 @@
+// User credentials will be stored here in format: username:password
+// This file will be updated when users sign up
