@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { Video, User, LogOut } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,8 +17,12 @@ export function Layout({ children, showHeader = false }: LayoutProps) {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center">
-                <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-full p-2 mr-2 md:mr-3">
-                  <Video className="h-4 w-4 md:h-6 md:w-6 text-white" />
+                <div className="mr-2 md:mr-3">
+                  <img 
+                    src="/attached_assets/logo_1753365092179.jpeg" 
+                    alt="Talkwink Logo" 
+                    className="h-6 w-6 md:h-8 md:w-8 rounded-full object-cover"
+                  />
                 </div>
                 <h1 className="text-lg md:text-2xl font-bold text-white">Talkwink</h1>
               </div>

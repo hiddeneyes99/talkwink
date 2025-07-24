@@ -1,23 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter';
 import { ScrollingPhotos } from '../components/ScrollingPhotos';
+import { Video, Shield, Heart, Star } from 'lucide-react';
+
+import logo from "@assets/logo.jpeg";
 
 export function LandingPage() {
   return (
     <div className="min-h-screen relative overflow-hidden">
       <ScrollingPhotos />
-      
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/75 via-purple-800/70 to-indigo-900/75" />
-      
       {/* Content */}
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Header */}
         <header className="p-4 md:p-6">
           <div className="flex items-center justify-between max-w-7xl mx-auto">
             <div className="flex items-center">
-              <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-full p-2 mr-2 md:mr-3">
-                <Video className="h-6 w-6 md:h-8 md:w-8 text-white" />
+              <div className="mr-2 md:mr-3">
+                <img 
+                  src={logo} 
+                  alt="Talkwink Logo" 
+                  className="h-8 w-8 md:h-12 md:w-12 rounded-full object-cover"
+                />
               </div>
               <h1 className="text-xl md:text-3xl font-bold text-white">Talkwink</h1>
             </div>

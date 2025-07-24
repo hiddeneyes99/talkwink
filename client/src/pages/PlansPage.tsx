@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams } from 'wouter';
 import { Layout } from '../components/Layout';
 import { GirlProfile, Plan } from '../types';
 import { Clock, Star, Crown, Check, ArrowLeft } from 'lucide-react';
@@ -53,9 +53,8 @@ const mockGirlProfile: GirlProfile = {
 };
 
 export function PlansPage() {
-  const { girlId } = useParams<{ girlId: string }>();
-  const navigate = useNavigate();
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const { girlId } = useParams();
+  const [, setLocation] = useLocation();
   const [girl, setGirl] = useState<GirlProfile | null>(null);
   const [plans, setPlans] = useState<Plan[]>([]);
 
@@ -65,14 +64,8 @@ export function PlansPage() {
     setPlans(mockPlans);
   }, [girlId]);
 
-  const handlePlanSelect = (planId: string) => {
-    setSelectedPlan(planId);
-  };
-
-  const handleProceedToPayment = () => {
-    if (selectedPlan) {
-      navigate(`/payment/${girlId}/${selectedPlan}`);
-    }
+  const handlePurchase = (planId: string) => {
+    setLocation(`/payment/${girlId}/${planId}`);
   };
 
   if (!girl) {
@@ -90,7 +83,7 @@ export function PlansPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
         <button
-          onClick={() => navigate('/home')}
+          onClick={() => setLocation('/home')}
           className="flex items-center text-purple-300 hover:text-white mb-6 transition-colors"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
@@ -135,12 +128,9 @@ export function PlansPage() {
           {plans.map((plan) => (
             <div
               key={plan.id}
-              className={`relative bg-white/10 backdrop-blur-md rounded-2xl p-6 border transition-all cursor-pointer transform hover:scale-105 ${
-                selectedPlan === plan.id
-                  ? 'border-purple-400 ring-2 ring-purple-400/50'
-                  : 'border-purple-500/20 hover:border-purple-400/40'
-              } ${plan.is_premium ? 'bg-gradient-to-br from-purple-600/20 to-pink-600/20' : ''}`}
-              onClick={() => handlePlanSelect(plan.id)}
+              className={`relative bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-purple-500/20 hover:border-purple-400/40 transition-all transform hover:scale-105 ${
+                plan.is_premium ? 'bg-gradient-to-br from-purple-600/20 to-pink-600/20' : ''
+              }`}
             >
               {plan.is_premium && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -173,29 +163,18 @@ export function PlansPage() {
               </div>
 
               <div className="text-center">
-                {selectedPlan === plan.id ? (
-                  <div className="bg-purple-600 text-white py-2 px-4 rounded-lg font-medium">
-                    Selected
-                  </div>
-                ) : (
-                  <div className="text-purple-300 text-sm">Click to select</div>
-                )}
+                <button
+                  onClick={() => handlePurchase(plan.id)}
+                  className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-3 px-4 rounded-lg transition-all transform hover:scale-105"
+                >
+                  Purchase Now
+                </button>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Proceed Button */}
-        {selectedPlan && (
-          <div className="text-center">
-            <button
-              onClick={handleProceedToPayment}
-              className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-lg transition-all transform hover:scale-105 text-lg"
-            >
-              Proceed to Payment
-            </button>
-          </div>
-        )}
+
       </div>
     </Layout>
   );

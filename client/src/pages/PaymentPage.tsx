@@ -1,18 +1,18 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams } from 'wouter';
 import { Layout } from '../components/Layout';
 import { ArrowLeft, CreditCard, Shield, Lock } from 'lucide-react';
 
 export function PaymentPage() {
-  const { girlId, planId } = useParams<{ girlId: string; planId: string }>();
-  const navigate = useNavigate();
+  const { girlId, planId } = useParams();
+  const [, setLocation] = useLocation();
 
   return (
     <Layout showHeader={true}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
         <button
-          onClick={() => navigate(`/plans/${girlId}`)}
+          onClick={() => setLocation(`/plans/${girlId}`)}
           className="flex items-center text-purple-300 hover:text-white mb-6 transition-colors"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'wouter';
 import { Layout } from '../components/Layout';
 import { GirlProfile } from '../types';
 import { MapPin, Star, Video, Heart } from 'lucide-react';
@@ -311,7 +311,7 @@ const mockProfiles: GirlProfile[] = [
 export function HomePage() {
   const [profiles, setProfiles] = useState<GirlProfile[]>([]);
   const [filter, setFilter] = useState<'all' | 'online'>('all');
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     // Simulate loading profiles
@@ -323,7 +323,7 @@ export function HomePage() {
     : profiles;
 
   const handleSelectGirl = (girlId: string) => {
-    navigate(`/plans/${girlId}`);
+    setLocation(`/plans/${girlId}`);
   };
 
   return (

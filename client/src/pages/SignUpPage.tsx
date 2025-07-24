@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'wouter';
 import { useAuth } from '../contexts/AuthContext';
 import { Layout } from '../components/Layout';
+import { Video, User, Lock, Eye, EyeOff } from 'lucide-react';
+
+import logo from "@assets/logo.jpeg";
 
 export function SignUpPage() {
   const [username, setUsername] = useState('');
@@ -10,7 +13,7 @@ export function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { signUp } = useAuth();
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +37,7 @@ export function SignUpPage() {
     if (error) {
       setError(error);
     } else {
-      navigate('/home');
+      setLocation('/home');
     }
     
     setLoading(false);
@@ -46,8 +49,12 @@ export function SignUpPage() {
         <div className="max-w-md w-full">
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-2xl border border-purple-500/20">
             <div className="text-center mb-8">
-              <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-full p-3 md:p-4 mx-auto mb-4 w-fit">
-                <Video className="h-8 w-8 md:h-10 md:w-10 text-white" />
+              <div className="mx-auto mb-4 w-fit">
+                <img 
+                  src={logo} 
+                  alt="Talkwink Logo" 
+                  className="h-16 w-16 md:h-20 md:w-20 rounded-full object-cover mx-auto"
+                />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Join Talkwink</h2>
               <p className="text-purple-200 text-sm md:text-base">Create your account to get started</p>
